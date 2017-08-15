@@ -1,33 +1,10 @@
 import os
 import json
-import logging
 
-import boto3
-from cached_property import cached_property
+from .base import SQSBase
 
 
-class SQSListener:
-    def __init__(self, aws_access_key_id, aws_secret_access_key, aws_region, queue_name):
-        self.queue_name = queue_name
-        self.aws_region = aws_region
-        self.aws_access_key_id = aws_access_key_id
-        self.aws_secret_access_key = aws_secret_access_key
-
-        self.logger = logging.getLogger()
-
-    @cached_property
-    def sqs_client(self):
-        return boto3.resource(
-            'sqs',
-            self.aws_region,
-            aws_access_key_id=self.aws_access_key_id,
-            aws_secret_access_key=self.aws_secret_access_key,
-        )
-
-    @cached_property
-    def sqs_queue(self):
-        return self.sqs_client.get_queue_by_name(QueueName=self.queue_name)
-
+class SQSListener(SQSBase):
     def receive_messages(self, max_number_of_message=1, wait_time=5, visibility_timeout=30):
         return self.sqs_queue.receive_messages(
             MaxNumberOfMessages=max_number_of_message,
