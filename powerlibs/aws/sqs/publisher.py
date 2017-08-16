@@ -22,10 +22,11 @@ class SQSPublisher(SQSBase):
 
         return translated_attributes
 
-    def publish_message(self, payload, attributes=None):
+    def publish(self, queue_name, payload, attributes=None):
+        queue = self.get_queue(queue_name)
         attributes = self.translate_attributes_into_amazon_bizarre_format(attributes) if attributes else None
 
-        response = self.queue.send_message(
+        response = queue.send_message(
             MessageAttributes=attributes,
             MessageBody=json.dumps(payload)
         )
