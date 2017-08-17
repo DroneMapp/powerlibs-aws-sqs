@@ -8,7 +8,7 @@ class SQSPublisher(SQSBase):
     def translate_attributes_into_amazon_bizarre_format(attributes):
         translated_attributes = {}
 
-        for key, value in attributes:
+        for key, value in attributes.items():
             if isinstance(value, str):
                 translated_attributes[key] = {
                     'DataType': 'String',
