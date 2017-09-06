@@ -42,7 +42,7 @@ setup(
     author_email='cleberman@gmail.com',
     url='https://github.com/Dronemapp/powerlibs-aws-sqs',
     license=license,
-    packages=['powerlibs.aws.sqs'],
+    packages=['powerlibs', 'powerlibs.aws', 'powerlibs.aws.sqs'],
     package_data={'': ['LICENSE', 'README.md']},
     include_package_data=True,
     install_requires=requires,
